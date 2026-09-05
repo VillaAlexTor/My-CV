@@ -13,13 +13,14 @@ const stack = ['Go', 'Python', 'TypeScript', 'React', 'Next.js', 'PostgreSQL', '
 function PixelPortrait({ progress }: { progress: number }) {
   const [imagesAvailable, setImagesAvailable] = useState(false)
   useEffect(() => {
-    const img = new Image()
-    img.onload = () => setImagesAvailable(true)
-    img.src = '/portraits/villa-sin-mascara.png'
+    const sources = ['/portraits/villa-sin-mascara.png', '/portraits/villa-con-mascara.png']
+    Promise.all(sources.map((src) => new Promise<void>((resolve, reject) => {
+      const img = new Image(); img.onload = () => resolve(); img.onerror = () => reject(); img.src = src
+    }))).then(() => setImagesAvailable(true)).catch(() => setImagesAvailable(false))
   }, [])
 
   return (
-    <div className="portrait-stage" aria-label={`Transformación de máscara al ${Math.round(progress * 100)}%`}>
+    <figure className="portrait-stage">
       <div className="scan-coordinates" aria-hidden="true"><span>SUBJECT_VILLA</span><span>{String(Math.round(progress * 100)).padStart(3, '0')}%</span></div>
       {imagesAvailable ? (
         <>
@@ -40,7 +41,8 @@ function PixelPortrait({ progress }: { progress: number }) {
       <div className="portrait-grid" aria-hidden="true" />
       <div className="scan-line" style={{ top: `${100 - progress * 100}%` }} aria-hidden="true" />
       {!imagesAvailable && <p className="asset-note">RETRATOS PENDIENTES<br/><small>public/portraits/</small></p>}
-    </div>
+      <figcaption className="sr-only">Retrato interactivo de Alexander. La máscara se equipa progresivamente al avanzar por la página. Progreso: {Math.round(progress * 100)}%.</figcaption>
+    </figure>
   )
 }
 
@@ -58,6 +60,12 @@ export default function App() {
     return () => window.removeEventListener('scroll', update)
   }, [])
 
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => event.key === 'Escape' && setMenuOpen(false)
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [])
+
   const onPointerMove = (event: React.PointerEvent) => {
     if (window.scrollY > window.innerHeight * .85) return
     const box = heroRef.current?.getBoundingClientRect()
@@ -67,21 +75,21 @@ export default function App() {
 
   return (
     <main>
+      <a className="skip-link" href="#perfil">Saltar al contenido</a>
       <nav className="topbar" aria-label="Navegación principal">
         <a className="brand" href="#inicio" aria-label="Villa, volver al inicio"><span>V</span>ILLA_OS</a>
-        <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Abrir menú">{menuOpen ? <X/> : <Menu/>}</button>
+        <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}>{menuOpen ? <X/> : <Menu/>}</button>
         <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
           <a href="#perfil" onClick={() => setMenuOpen(false)}>Perfil</a>
           <a href="#proyectos" onClick={() => setMenuOpen(false)}>Proyectos</a>
           <a href="#stack" onClick={() => setMenuOpen(false)}>Stack</a>
-          <a className="contact-link" href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">Contactar <ArrowUpRight size={15}/></a>
+          <a className="contact-link" href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>Contactar <ArrowUpRight size={15}/></a>
         </div>
       </nav>
 
       <section id="inicio" className="hero" ref={heroRef} onPointerMove={onPointerMove}>
         <div className="signal-line" aria-hidden="true"><i style={{ height: `${progress * 100}%` }}/></div>
         <div className="hero-copy">
-          <div className="status-line"><span className="status-dot"/> DISPONIBLE PARA NUEVAS MISIONES</div>
           <h1><span>ALEXANDER</span><br/>VILLARROEL</h1>
           <p className="hero-role">Seguridad de la información <b>×</b> Ingeniería backend</p>
           <p className="hero-summary">Investigo amenazas, construyo herramientas y convierto señales dispersas en decisiones técnicas defendibles.</p>
@@ -100,7 +108,7 @@ export default function App() {
 
       <section id="proyectos" className="section projects-section">
         <div className="project-visual" aria-hidden="true"><span className="node n1">CLI</span><span className="node n2">OSINT</span><span className="node n3">CVSS</span><span className="node n4">PDF</span><i className="wire w1"/><i className="wire w2"/><i className="wire w3"/></div>
-        <div className="project-copy"><span className="project-state">PROYECTO DESTACADO // ACTIVO</span><h2>CÓNDOR<br/>FRAMEWORK</h2><p>Pipeline propio para transformar investigación OSINT en hallazgos priorizados y reportes listos para entregar.</p><ul><li>CLI de reconocimiento en Python</li><li>Dashboard operativo en React</li><li>Motor CVSS 3.1 y reportes PDF con Node.js</li></ul><a href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">Explorar en GitHub <ArrowUpRight size={18}/></a></div>
+        <div className="project-copy"><h2>CÓNDOR<br/>FRAMEWORK</h2><p>Pipeline propio para transformar investigación OSINT en hallazgos priorizados y reportes listos para entregar.</p><ul><li>CLI de reconocimiento en Python</li><li>Dashboard operativo en React</li><li>Motor CVSS 3.1 y reportes PDF con Node.js</li></ul><a href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">Explorar en GitHub <ArrowUpRight size={18}/></a></div>
       </section>
 
       <section className="section integrity-section">

@@ -9,15 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/pixelify-sans": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
+    "autoprefixer": "latest",
+    "lucide-react": "latest",
+    "postcss": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "lucide-react": "latest",
     "tailwindcss": "^3.4.17",
-    "postcss": "latest",
-    "autoprefixer": "latest"
+    "typescript": "latest",
+    "vite": "latest"
   },
   "devDependencies": {
     "@types/react": "latest",
