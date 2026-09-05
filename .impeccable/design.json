@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-05T12:39:53.9109498-04:00",
+  "title": "Design System: Villa_OS",
+  "extensions": {
+    "colorMeta": {
+      "void-ink": {
+        "role": "neutral",
+        "displayName": "Tinta de vacío",
+        "canonical": "#090b0a",
+        "tonalRamp": ["oklch(15% 0.008 155)", "oklch(25% 0.008 155)", "oklch(36% 0.008 155)", "oklch(48% 0.008 155)", "oklch(60% 0.008 155)", "oklch(72% 0.008 155)", "oklch(84% 0.008 155)", "oklch(95% 0.008 155)"]
+      },
+      "deep-stone": {
+        "role": "neutral",
+        "displayName": "Piedra profunda",
+        "canonical": "#131714",
+        "tonalRamp": ["oklch(15% 0.012 150)", "oklch(25% 0.012 150)", "oklch(36% 0.012 150)", "oklch(48% 0.012 150)", "oklch(60% 0.012 150)", "oklch(72% 0.012 150)", "oklch(84% 0.012 150)", "oklch(95% 0.012 150)"]
+      },
+      "raised-stone": {
+        "role": "neutral",
+        "displayName": "Piedra elevada",
+        "canonical": "#1c221e",
+        "tonalRamp": ["oklch(15% 0.015 155)", "oklch(25% 0.015 155)", "oklch(36% 0.015 155)", "oklch(48% 0.015 155)", "oklch(60% 0.015 155)", "oklch(72% 0.015 155)", "oklch(84% 0.015 155)", "oklch(95% 0.015 155)"]
+      },
+      "dossier-bone": {
+        "role": "neutral",
+        "displayName": "Hueso de dossier",
+        "canonical": "#e8eddf",
+        "tonalRamp": ["oklch(15% 0.025 125)", "oklch(25% 0.025 125)", "oklch(36% 0.025 125)", "oklch(48% 0.025 125)", "oklch(60% 0.025 125)", "oklch(72% 0.025 125)", "oklch(84% 0.025 125)", "oklch(95% 0.025 125)"]
+      },
+      "telemetry-muted": {
+        "role": "neutral",
+        "displayName": "Telemetría atenuada",
+        "canonical": "#9ca89d",
+        "tonalRamp": ["oklch(15% 0.018 150)", "oklch(25% 0.018 150)", "oklch(36% 0.018 150)", "oklch(48% 0.018 150)", "oklch(60% 0.018 150)", "oklch(72% 0.018 150)", "oklch(84% 0.018 150)", "oklch(95% 0.018 150)"]
+      },
+      "redstone-signal": {
+        "role": "primary",
+        "displayName": "Señal Redstone",
+        "canonical": "#f04432",
+        "tonalRamp": ["oklch(15% 0.19 30)", "oklch(25% 0.19 30)", "oklch(36% 0.19 30)", "oklch(48% 0.19 30)", "oklch(60% 0.19 30)", "oklch(72% 0.19 30)", "oklch(84% 0.19 30)", "oklch(95% 0.19 30)"]
+      },
+      "redstone-depth": {
+        "role": "primary",
+        "displayName": "Profundidad Redstone",
+        "canonical": "#8f201a",
+        "tonalRamp": ["oklch(15% 0.14 28)", "oklch(25% 0.14 28)", "oklch(36% 0.14 28)", "oklch(48% 0.14 28)", "oklch(60% 0.14 28)", "oklch(72% 0.14 28)", "oklch(84% 0.14 28)", "oklch(95% 0.14 28)"]
+      },
+      "instrument-lime": {
+        "role": "secondary",
+        "displayName": "Lima instrumental",
+        "canonical": "#b8f34a",
+        "tonalRamp": ["oklch(15% 0.16 125)", "oklch(25% 0.16 125)", "oklch(36% 0.16 125)", "oklch(48% 0.16 125)", "oklch(60% 0.16 125)", "oklch(72% 0.16 125)", "oklch(84% 0.16 125)", "oklch(95% 0.16 125)"]
+      },
+      "structural-line": {
+        "role": "neutral",
+        "displayName": "Línea estructural",
+        "canonical": "#334038",
+        "tonalRamp": ["oklch(15% 0.025 150)", "oklch(25% 0.025 150)", "oklch(36% 0.025 150)", "oklch(48% 0.025 150)", "oklch(60% 0.025 150)", "oklch(72% 0.025 150)", "oklch(84% 0.025 150)", "oklch(95% 0.025 150)"]
+      },
+      "signal-white": {
+        "role": "neutral",
+        "displayName": "Blanco de señal",
+        "canonical": "#fff",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(36% 0 0)", "oklch(48% 0 0)", "oklch(60% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(100% 0 0)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display cúbica", "purpose": "Nombres y títulos de sección de gran masa visual." },
+      "headline": { "displayName": "Titular editorial", "purpose": "Argumentos y contrastes de idea." },
+      "title": { "displayName": "Título de capacidad", "purpose": "Nombra entradas dentro de listas escaneables." },
+      "body": { "displayName": "Lectura técnica", "purpose": "Explica experiencia, herramientas y sistemas." },
+      "label": { "displayName": "Telemetría", "purpose": "Navegación, códigos, coordenadas y estados." }
+    },
+    "shadows": [
+      { "name": "bloque-tallado", "value": "5px 6px 0 #252e28", "purpose": "Da masa material a titulares cúbicos sobre fondos oscuros." },
+      { "name": "nodo-suspendido", "value": "12px 14px 30px rgba(0,0,0,.45)", "purpose": "Separa nodos técnicos del plano de red." },
+      { "name": "senal-energizada", "value": "0 0 20px 3px rgba(240,68,50,.45)", "purpose": "Marca sensores y líneas Redstone activas." }
+    ],
+    "motion": [
+      { "name": "reveal-linear", "value": "70ms linear", "purpose": "Sincroniza recorte de máscara y línea de escaneo con el progreso." },
+      { "name": "scroll-cue", "value": "1.8s infinite cubic-bezier(.22,1,.36,1)", "purpose": "Sugiere desplazamiento vertical sin dominar la interfaz." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "800px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Acción de contacto",
+      "kind": "button",
+      "refersTo": "action-outline",
+      "description": "Acción secundaria delineada para superficies oscuras.",
+      "html": "<a class=\"ds-action-contact\" href=\"#\">CONTACTAR <span aria-hidden=\"true\">↗</span></a>",
+      "css": ".ds-action-contact { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--red); padding:10px 14px; color:var(--bone); background:transparent; font:600 13px var(--body); letter-spacing:.12em; text-transform:uppercase; text-decoration:none; } .ds-action-contact:hover { color:var(--lime); } .ds-action-contact:focus-visible { outline:2px solid var(--lime); outline-offset:5px; } .ds-action-contact:active { transform:translateY(1px); }"
+    },
+    {
+      "name": "Acción sólida",
+      "kind": "button",
+      "refersTo": "action-solid",
+      "description": "CTA principal en tramos editoriales claros.",
+      "html": "<a class=\"ds-action-solid\" href=\"#\">HABLEMOS <span aria-hidden=\"true\">↗</span></a>",
+      "css": ".ds-action-solid { display:inline-flex; align-items:center; gap:12px; background:var(--ink); color:var(--bone); padding:18px 22px; border:0; font:600 16px var(--body); text-decoration:none; } .ds-action-solid:hover { background:var(--red); color:#fff; } .ds-action-solid:focus-visible { outline:2px solid var(--lime); outline-offset:5px; } .ds-action-solid:active { transform:translateY(1px); }"
+    },
+    {
+      "name": "Navegación principal",
+      "kind": "nav",
+      "description": "Barra oscura con marca cúbica, etiquetas técnicas y acento Redstone.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\"><span>V</span>ILLA_OS</a><div><a href=\"#\">PERFIL</a><a href=\"#\">PROYECTOS</a><a href=\"#\">STACK</a></div></nav>",
+      "css": ".ds-nav { min-height:70px; padding:0 24px; display:flex; align-items:center; justify-content:space-between; gap:24px; border-bottom:1px solid var(--line); background:rgba(9,11,10,.92); color:var(--bone); font:13px var(--body); letter-spacing:.12em; text-transform:uppercase; } .ds-nav div { display:flex; gap:28px; } .ds-nav a { color:inherit; text-decoration:none; } .ds-nav a:hover { color:var(--lime); } .ds-nav a:focus-visible { outline:2px solid var(--lime); outline-offset:5px; } .ds-brand { font:700 19px var(--display); letter-spacing:.04em; } .ds-brand span { display:inline-grid; place-items:center; width:28px; height:28px; margin-right:6px; background:var(--red); color:#fff; clip-path:polygon(0 0,100% 0,100% 75%,75% 75%,75% 100%,0 100%); }"
+    },
+    {
+      "name": "Fila de capacidad",
+      "kind": "card",
+      "description": "Entrada editorial clara que separa código, explicación y herramientas.",
+      "html": "<article class=\"ds-capability\"><span class=\"ds-cap-code\">DFIR</span><div><h3>Forense y respuesta</h3><p>Adquisición, análisis de artefactos y respuesta estructurada.</p></div><strong>Autopsy · Volatility · Hayabusa</strong></article>",
+      "css": ".ds-capability { display:grid; grid-template-columns:70px 1fr minmax(180px,.65fr); gap:24px; align-items:center; padding:30px 0; border-top:1px solid #aab2a8; border-bottom:1px solid #aab2a8; background:var(--bone); color:var(--ink); font-family:var(--body); } .ds-capability h3 { margin:0 0 8px; font-size:23px; } .ds-capability p { margin:0; color:#3f4941; line-height:1.55; } .ds-cap-code { color:var(--red); font:700 14px var(--display); } .ds-capability strong { font-size:12px; letter-spacing:.08em; text-align:right; } .ds-capability:focus-within { outline:2px solid var(--lime); outline-offset:5px; }"
+    },
+    {
+      "name": "Nodo de red",
+      "kind": "custom",
+      "refersTo": "project-node",
+      "description": "Bloque técnico cuadrado para representar una etapa conectada.",
+      "html": "<button class=\"ds-network-node\">OSINT</button>",
+      "css": ".ds-network-node { display:grid; place-items:center; width:115px; height:115px; background:var(--stone-2); border:1px solid var(--red); color:var(--bone); font:700 17px var(--display); box-shadow:12px 14px 30px rgba(0,0,0,.45); } .ds-network-node:hover { background:var(--red); color:#fff; } .ds-network-node:focus-visible { outline:2px solid var(--lime); outline-offset:5px; } .ds-network-node:active { transform:translate(2px,2px); box-shadow:8px 10px 22px rgba(0,0,0,.45); }"
+    },
+    {
+      "name": "Evento de integridad",
+      "kind": "custom",
+      "description": "Bloque de cadena que empareja evento y comprobante criptográfico.",
+      "html": "<span class=\"ds-integrity-event\">CHECKPOINT<small>ED25519 ✓</small></span>",
+      "css": ".ds-integrity-event { display:inline-block; min-width:140px; padding:22px; background:var(--stone-2); color:var(--bone); font:700 14px var(--display); } .ds-integrity-event small { display:block; margin-top:9px; color:var(--lime); font:500 9px var(--body); letter-spacing:.08em; } .ds-integrity-event:hover { box-shadow:inset 0 -2px 0 var(--red); } .ds-integrity-event:focus-visible { outline:2px solid var(--lime); outline-offset:5px; }"
+    },
+    {
+      "name": "Celda de stack",
+      "kind": "chip",
+      "refersTo": "stack-cell",
+      "description": "Celda roja ensamblada para tecnologías dentro de una rejilla.",
+      "html": "<span class=\"ds-stack-cell\">TypeScript</span>",
+      "css": ".ds-stack-cell { display:inline-block; padding:24px 12px; border-right:1px solid rgba(255,255,255,.45); border-bottom:1px solid rgba(255,255,255,.45); background:var(--red); color:#fff; font:700 20px var(--display); } .ds-stack-cell:hover { background:var(--red-dark); } .ds-stack-cell:focus-visible { outline:2px solid var(--lime); outline-offset:5px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El Dossier Redstone",
+    "overview": "Villa_OS se comporta como un expediente de seguridad abierto sobre piedra profunda: oscuro, preciso y construido para inspección. Las señales Redstone no decoran; hacen visible progreso, conexión, énfasis y estado. El hueso sostiene la lectura y la lima aparece como instrumentación de alta precisión.\n\nLa interfaz combina la contundencia cúbica de Minecraft con la disciplina de un visor técnico. La geometría es recta, los bordes son visibles y los recortes pixelados aparecen solo donde explican identidad o función. El resultado debe sentirse capaz, directo y curioso, nunca corporativo-genérico.",
+    "keyCharacteristics": [
+      "Piedra casi negra y superficies tonales sin suavizado ornamental.",
+      "Rojo Redstone como señal operativa y columna narrativa.",
+      "Tipografía display cúbica emparejada con lectura sobria y técnica.",
+      "Retículas, coordenadas y líneas que comunican inspección y conexión.",
+      "Contraste abrupto entre tramos oscuros, hueso y rojo para estructurar el recorrido."
+    ],
+    "rules": [
+      { "name": "The Signal Has Meaning Rule", "body": "Reserva Redstone para progreso, relación, énfasis o estado; una superficie roja completa es una decisión estructural, no relleno casual.", "section": "colors" },
+      { "name": "The Lime Instrument Rule", "body": "Usa la lima como lectura de instrumento —telemetría, verificación, foco o enlace técnico— y no como segundo acento decorativo.", "section": "colors" },
+      { "name": "The Block and Brief Rule", "body": "Pixelify Sans declara; IBM Plex Sans explica. No uses la display para párrafos ni Plex para imitar titulares cúbicos.", "section": "typography" },
+      { "name": "The Flat Stone Rule", "body": "Mantén las superficies planas en reposo; añade sombra solo cuando explique masa, actividad o jerarquía espacial.", "section": "elevation" },
+      { "name": "The Cut With Purpose Rule", "body": "Recorta una silueta solo para señalar identidad, máscara o ensamblaje; los contenedores de lectura permanecen rectos y simples.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do usa Redstone para hacer legibles progreso, conexión, actividad y énfasis real.",
+      "Do conserva la separación de roles entre Pixelify Sans e IBM Plex Sans.",
+      "Do construye jerarquía con contraste tonal, divisores y espacios amplios antes de añadir sombras.",
+      "Do garantiza foco visible en lima, navegación por teclado y una alternativa estática con movimiento reducido.",
+      "Do adapta las rejillas a una columna y elimina transformaciones de perspectiva en pantallas estrechas."
+    ],
+    "donts": [
+      "Don't añadas radios suaves, degradados brillantes o tarjetas flotantes que diluyan la geometría mineral.",
+      "Don't uses rojo y lima como adornos intercambiables; cada uno comunica una clase distinta de señal.",
+      "Don't conviertas retículas, coordenadas o recortes pixelados en ruido continuo.",
+      "Don't copies el visor de retrato, la red de Cóndor o la cadena NUGEO como composición universal.",
+      "Don't ocultes información esencial detrás de hover, puntero preciso o animación obligatoria."
+    ]
+  }
+}
