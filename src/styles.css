@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Pixelify+Sans:wght@400..700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root{--ink:#090b0a;--stone:#131714;--stone-2:#1c221e;--bone:#e8eddf;--muted:#9ca89d;--red:#f04432;--red-dark:#8f201a;--lime:#b8f34a;--line:#334038;--display:'Pixelify Sans',sans-serif;--body:'Space Grotesk',sans-serif;color-scheme:dark;font-family:var(--body);background:var(--ink);color:var(--bone);font-synthesis:none}
+:root{--ink:#090b0a;--stone:#131714;--stone-2:#1c221e;--bone:#e8eddf;--muted:#9ca89d;--red:#f04432;--red-dark:#8f201a;--lime:#b8f34a;--line:#334038;--display:'Pixelify Sans',sans-serif;--body:'IBM Plex Sans',sans-serif;color-scheme:dark;font-family:var(--body);background:var(--ink);color:var(--bone);font-synthesis:none}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ink);overflow-x:hidden}body::selection{background:var(--red);color:#fff}a{color:inherit;text-decoration:none}button,a{outline-offset:5px}button:focus-visible,a:focus-visible{outline:2px solid var(--lime)}
 body::-webkit-scrollbar{width:10px}body::-webkit-scrollbar-track{background:var(--stone)}body::-webkit-scrollbar-thumb{background:var(--red);border:3px solid var(--stone)}
 .topbar{height:70px;position:fixed;z-index:50;left:0;right:0;top:0;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(9,11,10,.92);backdrop-filter:blur(12px)}.brand{font:700 19px var(--display);letter-spacing:.04em}.brand span{display:inline-grid;place-items:center;background:var(--red);color:#fff;width:28px;height:28px;margin-right:6px;clip-path:polygon(0 0,100% 0,100% 75%,75% 75%,75% 100%,0 100%)}.nav-links{display:flex;gap:28px;align-items:center;font-size:13px;text-transform:uppercase;letter-spacing:.12em}.nav-links a:hover{color:var(--lime)}.contact-link{display:flex;gap:8px;align-items:center;border:1px solid var(--red);padding:10px 14px}.menu-button{display:none;background:none;border:0;color:var(--bone)}

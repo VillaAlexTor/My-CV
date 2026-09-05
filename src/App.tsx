@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowDown, ArrowUpRight, Crosshair, Github, MapPin, Menu, X } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, Crosshair, MapPin, Menu, X } from 'lucide-react'
 
 const capabilities = [
   { code: 'OSINT', title: 'Inteligencia de fuentes abiertas', tools: 'Shodan · Censys · Maltego · FOCA', detail: 'Reconocimiento, correlación de activos y construcción de superficie de ataque.' },
@@ -74,7 +74,7 @@ export default function App() {
           <a href="#perfil" onClick={() => setMenuOpen(false)}>Perfil</a>
           <a href="#proyectos" onClick={() => setMenuOpen(false)}>Proyectos</a>
           <a href="#stack" onClick={() => setMenuOpen(false)}>Stack</a>
-          <a className="contact-link" href="mailto:alexander@example.com">Contactar <ArrowUpRight size={15}/></a>
+          <a className="contact-link" href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">Contactar <ArrowUpRight size={15}/></a>
         </div>
       </nav>
 
@@ -100,7 +100,7 @@ export default function App() {
 
       <section id="proyectos" className="section projects-section">
         <div className="project-visual" aria-hidden="true"><span className="node n1">CLI</span><span className="node n2">OSINT</span><span className="node n3">CVSS</span><span className="node n4">PDF</span><i className="wire w1"/><i className="wire w2"/><i className="wire w3"/></div>
-        <div className="project-copy"><span className="project-state">PROYECTO DESTACADO // ACTIVO</span><h2>CÓNDOR<br/>FRAMEWORK</h2><p>Pipeline propio para transformar investigación OSINT en hallazgos priorizados y reportes listos para entregar.</p><ul><li>CLI de reconocimiento en Python</li><li>Dashboard operativo en React</li><li>Motor CVSS 3.1 y reportes PDF con Node.js</li></ul><a href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">Explorar en GitHub <Github size={18}/></a></div>
+        <div className="project-copy"><span className="project-state">PROYECTO DESTACADO // ACTIVO</span><h2>CÓNDOR<br/>FRAMEWORK</h2><p>Pipeline propio para transformar investigación OSINT en hallazgos priorizados y reportes listos para entregar.</p><ul><li>CLI de reconocimiento en Python</li><li>Dashboard operativo en React</li><li>Motor CVSS 3.1 y reportes PDF con Node.js</li></ul><a href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">Explorar en GitHub <ArrowUpRight size={18}/></a></div>
       </section>
 
       <section className="section integrity-section">
@@ -109,7 +109,7 @@ export default function App() {
 
       <section id="stack" className="section stack-section"><h2>ARSENAL<br/>TÉCNICO</h2><div className="stack-grid">{stack.map((skill, i) => <span key={skill} style={{ '--i': i } as React.CSSProperties}>{skill}</span>)}</div><p>Frameworks: MITRE ATT&amp;CK · NIST CSF 2.0 · OWASP Top 10 · CVSS 3.1</p></section>
 
-      <footer><div><p>¿TIENES UN SISTEMA QUE PROTEGER<br/>O UNA HERRAMIENTA QUE CONSTRUIR?</p><a href="mailto:alexander@example.com">Hablemos <ArrowUpRight/></a></div><div className="footer-links"><a href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">GitHub</a><span>LinkedIn · pendiente</span></div><small>© {new Date().getFullYear()} Alexander Villarroel // La Paz, BO</small></footer>
+      <footer><div><p>¿TIENES UN SISTEMA QUE PROTEGER<br/>O UNA HERRAMIENTA QUE CONSTRUIR?</p><a href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">Hablemos <ArrowUpRight/></a></div><div className="footer-links"><a href="https://github.com/VillaAlexTor" target="_blank" rel="noreferrer">GitHub</a><span>LinkedIn · pendiente</span></div><small>© {new Date().getFullYear()} Alexander Villarroel // La Paz, BO</small></footer>
     </main>
   )
 }
