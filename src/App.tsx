@@ -92,9 +92,9 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
       }
       const range = (start: number, end: number) => Math.min(1, Math.max(0, (progress - start) / (end - start)))
       root.setProperty('--scroll-progress', String(progress))
-      root.setProperty('--glow-progress', String(range(.25, .45)))
-      root.setProperty('--particle-progress', String(range(.45, .65)))
-      root.setProperty('--network-progress', String(range(.65, .82)))
+      root.setProperty('--glow-progress', String(range(.12, .34)))
+      root.setProperty('--particle-progress', String(range(.28, .52)))
+      root.setProperty('--network-progress', String(range(.48, .72)))
     }
 
     const requestUpdate = () => {
