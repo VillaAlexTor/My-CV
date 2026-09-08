@@ -13,6 +13,8 @@ const stack = ['Go', 'Python', 'TypeScript', 'React', 'Next.js', 'PostgreSQL', '
 function PixelPortrait({ progress }: { progress: number }) {
   const frameCount = 47
   const frame = Math.min(frameCount, Math.max(1, Math.round(progress * (frameCount - 1)) + 1))
+  const [visibleFrame, setVisibleFrame] = useState(1)
+  const [previousFrame, setPreviousFrame] = useState(1)
 
   useEffect(() => {
     let cancelled = false
@@ -42,10 +44,17 @@ function PixelPortrait({ progress }: { progress: number }) {
     }
   }, [frame])
 
+  useEffect(() => {
+    if (frame === visibleFrame) return
+    setPreviousFrame(visibleFrame)
+    setVisibleFrame(frame)
+  }, [frame, visibleFrame])
+
   return (
     <figure className="portrait-stage">
       <div className="scan-coordinates" aria-hidden="true"><span>SUBJECT_VILLA</span><span>FRAME {String(frame).padStart(2, '0')} / {frameCount}</span></div>
-      <img className="portrait-img portrait-sequence" src={`/portraits/${frame}.png`} alt="Alexander Villarroel colocándose una máscara de seguridad" decoding="async" fetchPriority={frame === 1 ? 'high' : 'auto'} />
+      <img className="portrait-img portrait-sequence portrait-frame-previous" src={`/portraits/${previousFrame}.png`} alt="" aria-hidden="true" decoding="async" />
+      <img key={visibleFrame} className="portrait-img portrait-sequence portrait-frame-current" src={`/portraits/${visibleFrame}.png`} alt="Alexander Villarroel colocándose una máscara de seguridad" decoding="async" fetchPriority={visibleFrame === 1 ? 'high' : 'auto'} />
       <div className="portrait-grid" aria-hidden="true" />
       <div className="scan-line" style={{ top: `${100 - progress * 100}%` }} aria-hidden="true" />
       <figcaption className="sr-only">Secuencia interactiva de Alexander colocándose una máscara. Fotograma {frame} de {frameCount}; progreso: {Math.round(progress * 100)}%.</figcaption>
