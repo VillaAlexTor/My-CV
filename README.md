@@ -11,9 +11,9 @@ npm run dev
 
 ## Secuencia del retrato
 
-La animación usa los 47 fotogramas numerados de `public/portraits/1.png` a `public/portraits/47.png`. El desplazamiento de la página y el movimiento vertical del puntero dentro del hero controlan el fotograma visible.
+La animación usa los 47 fotogramas numerados de `public/portraits/1.png` a `public/portraits/47.png`. El hero permanece fijado mientras el desplazamiento controla directamente un único canvas HTML5: bajar avanza la secuencia y subir la reproduce en reversa.
 
-Los fotogramas cercanos se precargan con prioridad y el resto se carga gradualmente para mantener fluida la primera visita.
+En escritorio se precargan los 47 fotogramas antes de activar la secuencia. En móvil se usa una muestra alternada que conserva los extremos para reducir memoria y transferencia. Con `prefers-reduced-motion` se muestra un fotograma estático.
 
 ## Datos pendientes
 

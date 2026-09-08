@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 import { ArrowDown, ArrowUpRight, Crosshair, MapPin, Menu, X } from 'lucide-react'
 
 const capabilities = [
@@ -10,84 +10,136 @@ const capabilities = [
 
 const stack = ['Go', 'Python', 'TypeScript', 'React', 'Next.js', 'PostgreSQL', 'GORM', 'Docker', 'Kali Linux', 'Git']
 
-function PixelPortrait({ progress }: { progress: number }) {
+function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null> }) {
   const frameCount = 47
-  const frame = Math.min(frameCount, Math.max(1, Math.round(progress * (frameCount - 1)) + 1))
-  const [visibleFrame, setVisibleFrame] = useState(1)
-  const [previousFrame, setPreviousFrame] = useState(1)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const stageRef = useRef<HTMLElement>(null)
+  const framesRef = useRef<HTMLImageElement[]>([])
+  const currentFrameRef = useRef(0)
+  const rafRef = useRef(0)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     let cancelled = false
-    let nextFrame = 1
-    let timer = 0
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const mobile = window.matchMedia('(max-width: 800px)').matches
+    const frameNumbers = reducedMotion
+      ? [1]
+      : mobile
+        ? Array.from({ length: 24 }, (_, index) => Math.min(47, index * 2 + 1))
+        : Array.from({ length: frameCount }, (_, index) => index + 1)
 
-    const preloadBatch = () => {
+    Promise.all(frameNumbers.map((number) => new Promise<HTMLImageElement>((resolve, reject) => {
+      const image = new Image()
+      image.decoding = 'async'
+      image.onload = () => resolve(image)
+      image.onerror = reject
+      image.src = `/portraits/${number}.png`
+    }))).then((images) => {
       if (cancelled) return
-      const batchEnd = Math.min(frameCount, nextFrame + 3)
-      for (; nextFrame <= batchEnd; nextFrame += 1) {
-        const image = new Image()
-        image.decoding = 'async'
-        image.src = `/portraits/${nextFrame}.png`
-      }
-      if (nextFrame <= frameCount) timer = window.setTimeout(preloadBatch, 180)
-    }
+      framesRef.current = images
+      currentFrameRef.current = 0
+      setLoaded(true)
+    })
 
-    preloadBatch()
-    return () => { cancelled = true; window.clearTimeout(timer) }
+    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
-    for (let nearby = Math.max(1, frame - 2); nearby <= Math.min(frameCount, frame + 2); nearby += 1) {
-      const image = new Image()
-      image.decoding = 'async'
-      image.src = `/portraits/${nearby}.png`
-    }
-  }, [frame])
+    if (!loaded) return
+    const canvas = canvasRef.current
+    const stage = stageRef.current
+    const hero = heroRef.current
+    if (!canvas || !stage || !hero) return
+    const context = canvas.getContext('2d', { alpha: false })
+    if (!context) return
 
-  useEffect(() => {
-    if (frame === visibleFrame) return
-    setPreviousFrame(visibleFrame)
-    setVisibleFrame(frame)
-  }, [frame, visibleFrame])
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const root = hero.style
+
+    const draw = () => {
+      const image = framesRef.current[currentFrameRef.current]
+      if (!image) return
+      const width = canvas.clientWidth
+      const height = canvas.clientHeight
+      context.setTransform(1, 0, 0, 1, 0, 0)
+      context.fillStyle = '#000'
+      context.fillRect(0, 0, canvas.width, canvas.height)
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      context.setTransform(dpr, 0, 0, dpr, 0, 0)
+      const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight)
+      const drawWidth = image.naturalWidth * scale
+      const drawHeight = image.naturalHeight * scale
+      context.drawImage(image, (width - drawWidth) / 2, height - drawHeight, drawWidth, drawHeight)
+    }
+
+    const resize = () => {
+      const bounds = canvas.getBoundingClientRect()
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = Math.max(1, Math.round(bounds.width * dpr))
+      canvas.height = Math.max(1, Math.round(bounds.height * dpr))
+      draw()
+    }
+
+    const update = () => {
+      rafRef.current = 0
+      const scrollRange = Math.max(1, hero.offsetHeight - window.innerHeight)
+      const progress = reducedMotion ? 0 : Math.min(1, Math.max(0, (window.scrollY - hero.offsetTop) / scrollRange))
+      const nextFrame = Math.min(framesRef.current.length - 1, Math.round(progress * (framesRef.current.length - 1)))
+      if (nextFrame !== currentFrameRef.current) {
+        currentFrameRef.current = nextFrame
+        draw()
+      }
+      const range = (start: number, end: number) => Math.min(1, Math.max(0, (progress - start) / (end - start)))
+      root.setProperty('--scroll-progress', String(progress))
+      root.setProperty('--glow-progress', String(range(.25, .45)))
+      root.setProperty('--particle-progress', String(range(.45, .65)))
+      root.setProperty('--network-progress', String(range(.65, .82)))
+    }
+
+    const requestUpdate = () => {
+      if (!rafRef.current) rafRef.current = window.requestAnimationFrame(update)
+    }
+
+    const observer = new ResizeObserver(resize)
+    observer.observe(stage)
+    resize()
+    update()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      if (rafRef.current) window.cancelAnimationFrame(rafRef.current)
+    }
+  }, [heroRef, loaded])
 
   return (
-    <figure className="portrait-stage">
-      <div className="scan-coordinates" aria-hidden="true"><span>SUBJECT_VILLA</span><span>FRAME {String(frame).padStart(2, '0')} / {frameCount}</span></div>
-      <img className="portrait-img portrait-sequence portrait-frame-previous" src={`/portraits/${previousFrame}.png`} alt="" aria-hidden="true" decoding="async" />
-      <img key={visibleFrame} className="portrait-img portrait-sequence portrait-frame-current" src={`/portraits/${visibleFrame}.png`} alt="Alexander Villarroel colocándose una máscara de seguridad" decoding="async" fetchPriority={visibleFrame === 1 ? 'high' : 'auto'} />
-      <div className="portrait-grid" aria-hidden="true" />
-      <div className="scan-line" style={{ top: `${100 - progress * 100}%` }} aria-hidden="true" />
-      <figcaption className="sr-only">Secuencia interactiva de Alexander colocándose una máscara. Fotograma {frame} de {frameCount}; progreso: {Math.round(progress * 100)}%.</figcaption>
+    <figure className={`portrait-stage ${loaded ? 'is-ready' : ''}`} ref={stageRef}>
+      <div className="cyber-atmosphere" aria-hidden="true">
+        <div className="cyber-glow" />
+        <div className="cyber-particles">{Array.from({ length: 9 }, (_, index) => <i key={index} />)}</div>
+        <svg className="cyber-network" viewBox="0 0 800 900" preserveAspectRatio="none">
+          <g><path d="M32 690 L150 575 L230 720 M610 170 L735 95 L785 250 M620 690 L760 590 L790 770"/><circle cx="32" cy="690" r="4"/><circle cx="150" cy="575" r="4"/><circle cx="230" cy="720" r="4"/><circle cx="610" cy="170" r="4"/><circle cx="735" cy="95" r="4"/><circle cx="785" cy="250" r="4"/><circle cx="620" cy="690" r="4"/><circle cx="760" cy="590" r="4"/><circle cx="790" cy="770" r="4"/></g>
+        </svg>
+      </div>
+      <canvas ref={canvasRef} aria-label="Alexander eleva una máscara mientras avanzas por la página" />
+      {!loaded && <div className="sequence-loader" role="status"><span />Preparando secuencia</div>}
+      <figcaption className="sr-only">Secuencia cinematográfica controlada por desplazamiento: Alexander levanta una máscara desde el rostro descubierto hasta cubrirlo.</figcaption>
     </figure>
   )
 }
 
 export default function App() {
-  const [progress, setProgress] = useState(0)
   const [menuOpen, setMenuOpen] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const update = () => {
-      const h = Math.max(window.innerHeight * .9, 500)
-      setProgress(Math.min(1, Math.max(0, window.scrollY / h)))
-    }
-    update(); window.addEventListener('scroll', update, { passive: true })
-    return () => window.removeEventListener('scroll', update)
-  }, [])
 
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => event.key === 'Escape' && setMenuOpen(false)
     window.addEventListener('keydown', closeOnEscape)
     return () => window.removeEventListener('keydown', closeOnEscape)
   }, [])
-
-  const onPointerMove = (event: React.PointerEvent) => {
-    if (window.scrollY > window.innerHeight * .85) return
-    const box = heroRef.current?.getBoundingClientRect()
-    if (!box) return
-    setProgress(Math.min(1, Math.max(0, (event.clientY - box.top) / box.height)))
-  }
 
   return (
     <main>
@@ -103,16 +155,18 @@ export default function App() {
         </div>
       </nav>
 
-      <section id="inicio" className="hero" ref={heroRef} onPointerMove={onPointerMove}>
-        <div className="signal-line" aria-hidden="true"><i style={{ height: `${progress * 100}%` }}/></div>
-        <div className="hero-copy">
-          <h1><span>ALEXANDER</span><br/>VILLARROEL</h1>
-          <p className="hero-role">Seguridad de la información <b>×</b> Ingeniería backend</p>
-          <p className="hero-summary">Investigo amenazas, construyo herramientas y convierto señales dispersas en decisiones técnicas defendibles.</p>
-          <div className="hero-meta"><span><MapPin size={15}/> La Paz, Bolivia</span><span><Crosshair size={15}/> OSINT · DFIR · AppSec</span></div>
+      <section id="inicio" className="hero-sequence" ref={heroRef}>
+        <div className="hero">
+          <div className="signal-line" aria-hidden="true"><i /></div>
+          <div className="hero-copy">
+            <h1><span>ALEXANDER</span><br/>VILLARROEL</h1>
+            <p className="hero-role">Seguridad de la información <b>×</b> Ingeniería backend</p>
+            <p className="hero-summary">Investigo amenazas, construyo herramientas y convierto señales dispersas en decisiones técnicas defendibles.</p>
+            <div className="hero-meta"><span><MapPin size={15}/> La Paz, Bolivia</span><span><Crosshair size={15}/> OSINT · DFIR · AppSec</span></div>
+          </div>
+          <CinematicPortrait heroRef={heroRef}/>
+          <div className="scroll-cue"><ArrowDown size={17}/><span>DESPLÁZATE PARA EQUIPAR</span></div>
         </div>
-        <PixelPortrait progress={progress}/>
-        <div className="scroll-cue"><ArrowDown size={17}/><span>DESPLÁZATE PARA EQUIPAR</span></div>
       </section>
 
       <section id="perfil" className="section profile-section">

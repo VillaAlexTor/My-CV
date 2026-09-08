@@ -29,7 +29,7 @@ The CV is read on desktop and mobile, often quickly by recruiters or technical r
 ## Capabilities and Constraints
 
 - Spanish is the primary language.
-- The opening interaction must react to vertical pointer/scroll movement and progressively reveal a masked portrait over an unmasked portrait.
+- The opening interaction is a pinned, scroll-scrubbed 47-frame portrait sequence: downward scroll raises the mask, upward scroll reverses it, and the portfolio continues only after the final frame.
 - The portrait interaction uses a supplied 47-frame PNG sequence showing Alexander progressively placing the mask.
 - GitHub is `github.com/VillaAlexTor`.
 - LinkedIn URL remains undecided and must not be invented.

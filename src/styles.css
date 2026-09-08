@@ -31,3 +31,46 @@ footer{padding:100px 8vw 30px;background:var(--bone);color:var(--ink)}footer>div
 @keyframes frame-blend{from{opacity:.18}to{opacity:1}}
 @media(max-width:800px){.portrait-stage{top:72px;height:72vh;margin:0 -6vw}.portrait-grid{opacity:.16}}
 @media(prefers-reduced-motion:reduce){.portrait-frame-current{animation:none}}
+
+/* Scroll-scrub hero */
+.hero-sequence{--scroll-progress:0;--glow-progress:0;--particle-progress:0;--network-progress:0;position:relative;height:calc(100vh + 3600px);background:#000}
+.hero-sequence .hero{position:sticky;top:0;height:100vh;min-height:0;overflow:hidden;padding:clamp(96px,12vh,132px) 4vw 6vh 7vw;display:grid;grid-template-columns:52% 48%;align-items:center;background:linear-gradient(90deg,var(--ink) 0%,#060807 43%,#000 59%,#000 100%)}
+.hero-sequence .hero::before{inset:70px 0 0;z-index:0;opacity:.62;mask-image:linear-gradient(90deg,#000 0%,#000 52%,transparent 82%)}
+.hero-sequence .hero-copy{position:relative;top:auto;padding:0;z-index:6;align-self:center}
+.hero-sequence .signal-line{z-index:7}
+.hero-sequence .signal-line i{height:calc(var(--scroll-progress) * 100%)}
+.hero-sequence .scroll-cue{z-index:7;opacity:calc(1 - var(--scroll-progress) * 2.6)}
+.hero-sequence .portrait-stage{position:relative;top:auto;align-self:stretch;width:auto;height:auto;margin:0 -4vw 0 -8vw;overflow:hidden;border:0;background:#000;z-index:2}
+.hero-sequence .portrait-stage::after,.hero-sequence .portrait-grid,.hero-sequence .scan-coordinates,.hero-sequence .scan-line{display:none}
+.portrait-stage canvas{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;opacity:0;transition:opacity 320ms cubic-bezier(.16,1,.3,1)}
+.portrait-stage.is-ready canvas{opacity:1}
+.cyber-atmosphere{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;mix-blend-mode:screen;mask-image:radial-gradient(ellipse 38% 62% at 55% 57%,transparent 0%,transparent 78%,#000 100%)}
+.cyber-glow{position:absolute;inset:8% -12% 4% 8%;opacity:calc(var(--glow-progress) * .42);background:radial-gradient(ellipse at 56% 54%,rgba(240,68,50,.48) 0%,rgba(143,32,26,.16) 32%,transparent 68%);filter:blur(26px)}
+.cyber-particles{position:absolute;inset:0;opacity:calc(var(--particle-progress) * .58)}
+.cyber-particles i{position:absolute;width:3px;height:3px;background:#f26a3d;box-shadow:0 0 9px 2px rgba(240,68,50,.44)}
+.cyber-particles i:nth-child(1){left:8%;top:31%}.cyber-particles i:nth-child(2){left:15%;top:72%;width:2px;height:2px}.cyber-particles i:nth-child(3){left:26%;top:16%}.cyber-particles i:nth-child(4){left:82%;top:22%;width:2px;height:2px}.cyber-particles i:nth-child(5){left:91%;top:61%}.cyber-particles i:nth-child(6){left:76%;top:81%;width:2px;height:2px}.cyber-particles i:nth-child(7){left:4%;top:88%;width:2px;height:2px}.cyber-particles i:nth-child(8){left:95%;top:36%;width:2px;height:2px}.cyber-particles i:nth-child(9){left:70%;top:10%}
+.cyber-network{position:absolute;inset:0;width:100%;height:100%;opacity:calc(var(--network-progress) * .34);fill:rgba(240,68,50,.7);stroke:rgba(240,68,50,.74);stroke-width:1;vector-effect:non-scaling-stroke}
+.cyber-network path{fill:none}
+.sequence-loader{position:absolute;z-index:5;right:8%;bottom:8%;display:flex;align-items:center;gap:10px;color:var(--muted);font:600 10px var(--body);letter-spacing:.15em;text-transform:uppercase}
+.sequence-loader span{width:38px;height:1px;background:var(--line);overflow:hidden}
+.sequence-loader span::after{content:'';display:block;width:55%;height:100%;background:var(--red);animation:sequence-loading 900ms ease-in-out infinite alternate}
+@keyframes sequence-loading{from{transform:translateX(-100%)}to{transform:translateX(180%)}}
+
+@media(max-width:800px){
+  .hero-sequence{height:calc(100svh + 2600px)}
+  .hero-sequence .hero{height:100svh;min-height:0;padding:86px 5vw 3vh;display:block;background:linear-gradient(180deg,var(--ink) 0%,#020303 45%,#000 100%)}
+  .hero-sequence .hero-copy{max-width:94%;z-index:6}
+  .hero-sequence .hero h1{font-size:clamp(3.2rem,15vw,5.7rem);margin:16px 0 22px}
+  .hero-sequence .hero-role{font-size:15px}
+  .hero-sequence .hero-summary{font-size:14px;line-height:1.55;max-width:42ch}
+  .hero-sequence .hero-meta{margin-top:20px;gap:12px}
+  .hero-sequence .portrait-stage{position:absolute;inset:29vh 0 0;height:auto;margin:0;z-index:2}
+  .hero-sequence .scroll-cue{bottom:3vh}
+  .cyber-atmosphere{mask-image:radial-gradient(ellipse 45% 58% at 54% 61%,transparent 0%,transparent 80%,#000 100%)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-sequence{height:100svh}
+  .cyber-atmosphere,.hero-sequence .scroll-cue{display:none}
+  .portrait-stage canvas{transition:none}
+}
