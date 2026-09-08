@@ -11,37 +11,44 @@ const capabilities = [
 const stack = ['Go', 'Python', 'TypeScript', 'React', 'Next.js', 'PostgreSQL', 'GORM', 'Docker', 'Kali Linux', 'Git']
 
 function PixelPortrait({ progress }: { progress: number }) {
-  const [imagesAvailable, setImagesAvailable] = useState(false)
+  const frameCount = 47
+  const frame = Math.min(frameCount, Math.max(1, Math.round(progress * (frameCount - 1)) + 1))
+
   useEffect(() => {
-    const sources = ['/portraits/villa-sin-mascara.png', '/portraits/villa-con-mascara.png']
-    Promise.all(sources.map((src) => new Promise<void>((resolve, reject) => {
-      const img = new Image(); img.onload = () => resolve(); img.onerror = () => reject(); img.src = src
-    }))).then(() => setImagesAvailable(true)).catch(() => setImagesAvailable(false))
+    let cancelled = false
+    let nextFrame = 1
+    let timer = 0
+
+    const preloadBatch = () => {
+      if (cancelled) return
+      const batchEnd = Math.min(frameCount, nextFrame + 3)
+      for (; nextFrame <= batchEnd; nextFrame += 1) {
+        const image = new Image()
+        image.decoding = 'async'
+        image.src = `/portraits/${nextFrame}.png`
+      }
+      if (nextFrame <= frameCount) timer = window.setTimeout(preloadBatch, 180)
+    }
+
+    preloadBatch()
+    return () => { cancelled = true; window.clearTimeout(timer) }
   }, [])
+
+  useEffect(() => {
+    for (let nearby = Math.max(1, frame - 2); nearby <= Math.min(frameCount, frame + 2); nearby += 1) {
+      const image = new Image()
+      image.decoding = 'async'
+      image.src = `/portraits/${nearby}.png`
+    }
+  }, [frame])
 
   return (
     <figure className="portrait-stage">
-      <div className="scan-coordinates" aria-hidden="true"><span>SUBJECT_VILLA</span><span>{String(Math.round(progress * 100)).padStart(3, '0')}%</span></div>
-      {imagesAvailable ? (
-        <>
-          <img className="portrait-img" src="/portraits/villa-sin-mascara.png" alt="Alexander Villarroel sin máscara" />
-          <div className="mask-reveal" style={{ clipPath: `inset(${100 - progress * 100}% 0 0 0)` }}>
-            <img className="portrait-img" src="/portraits/villa-con-mascara.png" alt="" />
-          </div>
-        </>
-      ) : (
-        <div className="pixel-avatar" aria-label="Espacio reservado para el retrato de Alexander">
-          <div className="pixel-head"><i className="hair"/><i className="ear left"/><i className="ear right"/><i className="eye left"/><i className="eye right"/><i className="nose"/></div>
-          <div className="pixel-neck"/><div className="pixel-body"/>
-          <div className="generated-mask" style={{ clipPath: `inset(${100 - progress * 100}% 0 0 0)` }}>
-            <div className="mask-shell"><i className="mask-eye left"/><i className="mask-eye right"/><i className="filter"/></div>
-          </div>
-        </div>
-      )}
+      <div className="scan-coordinates" aria-hidden="true"><span>SUBJECT_VILLA</span><span>FRAME {String(frame).padStart(2, '0')} / {frameCount}</span></div>
+      <img className="portrait-img portrait-sequence" src={`/portraits/${frame}.png`} alt="Alexander Villarroel colocándose una máscara de seguridad" decoding="async" fetchPriority={frame === 1 ? 'high' : 'auto'} />
       <div className="portrait-grid" aria-hidden="true" />
       <div className="scan-line" style={{ top: `${100 - progress * 100}%` }} aria-hidden="true" />
-      {!imagesAvailable && <p className="asset-note">RETRATOS PENDIENTES<br/><small>public/portraits/</small></p>}
-      <figcaption className="sr-only">Retrato interactivo de Alexander. La máscara se equipa progresivamente al avanzar por la página. Progreso: {Math.round(progress * 100)}%.</figcaption>
+      <figcaption className="sr-only">Secuencia interactiva de Alexander colocándose una máscara. Fotograma {frame} de {frameCount}; progreso: {Math.round(progress * 100)}%.</figcaption>
     </figure>
   )
 }
