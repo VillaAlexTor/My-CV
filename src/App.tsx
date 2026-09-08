@@ -51,7 +51,7 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
     const stage = stageRef.current
     const hero = heroRef.current
     if (!canvas || !stage || !hero) return
-    const context = canvas.getContext('2d', { alpha: false })
+    const context = canvas.getContext('2d', { alpha: true })
     if (!context) return
     context.imageSmoothingEnabled = true
     context.imageSmoothingQuality = 'high'
@@ -65,8 +65,7 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
       const width = canvas.clientWidth
       const height = canvas.clientHeight
       context.setTransform(1, 0, 0, 1, 0, 0)
-      context.fillStyle = '#000'
-      context.fillRect(0, 0, canvas.width, canvas.height)
+      context.clearRect(0, 0, canvas.width, canvas.height)
       const dpr = Math.min(window.devicePixelRatio || 1, 3)
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
       context.imageSmoothingEnabled = true
@@ -75,8 +74,38 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
       const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight)
       const drawWidth = image.naturalWidth * scale
       const drawHeight = image.naturalHeight * scale
-      context.drawImage(image, (width - drawWidth) / 2, height - drawHeight, drawWidth, drawHeight)
+      const drawX = (width - drawWidth) / 2
+      const drawY = height - drawHeight
+
+      context.filter = 'contrast(1.045) saturate(1.015)'
+      context.drawImage(image, drawX, drawY, drawWidth, drawHeight)
       context.filter = 'none'
+
+      // Dissolve the source image's hard rectangular edges into the hero background.
+      const sideFeather = Math.min(drawWidth * .16, 92)
+      const topFeather = Math.min(drawHeight * .07, 54)
+      context.save()
+      context.globalCompositeOperation = 'destination-out'
+
+      const leftFade = context.createLinearGradient(drawX, 0, drawX + sideFeather, 0)
+      leftFade.addColorStop(0, 'rgba(0,0,0,1)')
+      leftFade.addColorStop(1, 'rgba(0,0,0,0)')
+      context.fillStyle = leftFade
+      context.fillRect(drawX, drawY, sideFeather, drawHeight)
+
+      const rightFade = context.createLinearGradient(drawX + drawWidth - sideFeather, 0, drawX + drawWidth, 0)
+      rightFade.addColorStop(0, 'rgba(0,0,0,0)')
+      rightFade.addColorStop(1, 'rgba(0,0,0,1)')
+      context.fillStyle = rightFade
+      context.fillRect(drawX + drawWidth - sideFeather, drawY, sideFeather, drawHeight)
+
+      const topFade = context.createLinearGradient(0, drawY, 0, drawY + topFeather)
+      topFade.addColorStop(0, 'rgba(0,0,0,1)')
+      topFade.addColorStop(1, 'rgba(0,0,0,0)')
+      context.fillStyle = topFade
+      context.fillRect(drawX, drawY, drawWidth, topFeather)
+      context.restore()
+
     }
 
     const resize = () => {
@@ -98,9 +127,9 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
       }
       const range = (start: number, end: number) => Math.min(1, Math.max(0, (progress - start) / (end - start)))
       root.setProperty('--scroll-progress', String(progress))
-      root.setProperty('--glow-progress', String(range(.12, .34)))
-      root.setProperty('--particle-progress', String(range(.28, .52)))
-      root.setProperty('--network-progress', String(range(.48, .72)))
+      root.setProperty('--glow-progress', String(range(.06, .3)))
+      root.setProperty('--particle-progress', String(range(.16, .5)))
+      root.setProperty('--network-progress', String(range(.32, .68)))
     }
 
     const requestUpdate = () => {
@@ -125,9 +154,9 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
     <figure className={`portrait-stage ${loaded ? 'is-ready' : ''}`} ref={stageRef}>
       <div className="cyber-atmosphere" aria-hidden="true">
         <div className="cyber-glow" />
-        <div className="cyber-particles">{Array.from({ length: 9 }, (_, index) => <i key={index} />)}</div>
+        <div className="cyber-particles">{Array.from({ length: 18 }, (_, index) => <i key={index} />)}</div>
         <svg className="cyber-network" viewBox="0 0 800 900" preserveAspectRatio="none">
-          <g><path d="M32 690 L150 575 L230 720 M610 170 L735 95 L785 250 M620 690 L760 590 L790 770"/><circle cx="32" cy="690" r="4"/><circle cx="150" cy="575" r="4"/><circle cx="230" cy="720" r="4"/><circle cx="610" cy="170" r="4"/><circle cx="735" cy="95" r="4"/><circle cx="785" cy="250" r="4"/><circle cx="620" cy="690" r="4"/><circle cx="760" cy="590" r="4"/><circle cx="790" cy="770" r="4"/></g>
+          <g><path d="M18 706 L126 610 L218 690 L292 564 M34 330 L138 392 L224 286 M566 172 L660 92 L780 176 L714 292 M578 642 L676 548 L782 624 M648 420 L744 368 L794 438"/><circle cx="18" cy="706" r="5"/><circle cx="126" cy="610" r="4"/><circle cx="218" cy="690" r="5"/><circle cx="292" cy="564" r="3"/><circle cx="34" cy="330" r="4"/><circle cx="138" cy="392" r="5"/><circle cx="224" cy="286" r="3"/><circle cx="566" cy="172" r="4"/><circle cx="660" cy="92" r="5"/><circle cx="780" cy="176" r="4"/><circle cx="714" cy="292" r="3"/><circle cx="578" cy="642" r="4"/><circle cx="676" cy="548" r="5"/><circle cx="782" cy="624" r="4"/><circle cx="648" cy="420" r="3"/><circle cx="744" cy="368" r="5"/><circle cx="794" cy="438" r="3"/></g>
         </svg>
       </div>
       <canvas ref={canvasRef} aria-label="Alexander eleva una máscara mientras avanzas por la página" />
