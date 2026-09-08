@@ -53,6 +53,8 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
     if (!canvas || !stage || !hero) return
     const context = canvas.getContext('2d', { alpha: false })
     if (!context) return
+    context.imageSmoothingEnabled = true
+    context.imageSmoothingQuality = 'high'
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const root = hero.style
@@ -65,17 +67,21 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
       context.setTransform(1, 0, 0, 1, 0, 0)
       context.fillStyle = '#000'
       context.fillRect(0, 0, canvas.width, canvas.height)
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const dpr = Math.min(window.devicePixelRatio || 1, 3)
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
+      context.imageSmoothingEnabled = true
+      context.imageSmoothingQuality = 'high'
+      context.filter = 'contrast(1.045) saturate(1.015)'
       const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight)
       const drawWidth = image.naturalWidth * scale
       const drawHeight = image.naturalHeight * scale
       context.drawImage(image, (width - drawWidth) / 2, height - drawHeight, drawWidth, drawHeight)
+      context.filter = 'none'
     }
 
     const resize = () => {
       const bounds = canvas.getBoundingClientRect()
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const dpr = Math.min(window.devicePixelRatio || 1, 3)
       canvas.width = Math.max(1, Math.round(bounds.width * dpr))
       canvas.height = Math.max(1, Math.round(bounds.height * dpr))
       draw()
