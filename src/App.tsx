@@ -104,6 +104,12 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
       topFade.addColorStop(1, 'rgba(0,0,0,0)')
       context.fillStyle = topFade
       context.fillRect(drawX, drawY, drawWidth, topFeather)
+
+      // Remove the final source pixels completely; some frames contain a bright
+      // one-pixel seam that survives an interpolated gradient at the boundary.
+      context.fillStyle = '#000'
+      context.fillRect(drawX - 1, drawY, 3, drawHeight)
+      context.fillRect(drawX + drawWidth - 4, drawY, 6, drawHeight)
       context.restore()
 
     }
