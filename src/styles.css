@@ -77,3 +77,19 @@ footer{padding:100px 8vw 30px;background:var(--bone);color:var(--ink)}footer>div
   .cyber-atmosphere,.hero-sequence .scroll-cue{display:none}
   .portrait-stage canvas{transition:none}
 }
+
+/* Full-width Redstone field and block-built hero lettering */
+.hero-sequence .hero h1{font-variation-settings:'wght' 700;line-height:.72;letter-spacing:-.015em;text-transform:uppercase;text-rendering:optimizeSpeed}
+.hero-sequence .hero h1 span{display:block;width:max-content;max-width:100%;color:var(--bone);text-shadow:0 3px 0 #68736a,3px 3px 0 #3d4840,6px 7px 0 #202722}
+.hero-sequence .hero h1 span:first-child{color:var(--red);text-shadow:0 3px 0 #b52c22,3px 3px 0 #762019,6px 7px 0 #30110e}
+.hero-sequence .cyber-atmosphere{position:absolute;inset:70px 0 0;z-index:3;pointer-events:none;overflow:hidden;mix-blend-mode:screen;mask-image:none}
+.hero-sequence .cyber-atmosphere::before{content:'';position:absolute;inset:0;opacity:calc(var(--glow-progress) * .9);background:linear-gradient(110deg,transparent 4%,rgba(143,32,26,.14) 28%,rgba(240,68,50,.27) 52%,rgba(255,112,50,.18) 75%,transparent 98%);filter:blur(14px);transform:scaleX(calc(.92 + var(--glow-progress) * .08))}
+.hero-sequence .cyber-atmosphere::after{content:'';position:absolute;inset:0;opacity:calc(var(--glow-progress) * .8);background:radial-gradient(ellipse 32% 52% at 22% 58%,rgba(240,68,50,.3),transparent 76%),radial-gradient(ellipse 38% 58% at 76% 52%,rgba(240,68,50,.42),rgba(143,32,26,.16) 55%,transparent 82%);filter:blur(26px)}
+.hero-sequence .cyber-glow{position:absolute;inset:-4% -8%;opacity:calc(var(--glow-progress) * .96);background:radial-gradient(ellipse 58% 44% at 50% 56%,rgba(255,76,42,.42) 0%,rgba(240,68,50,.24) 40%,rgba(143,32,26,.12) 64%,transparent 84%);filter:blur(30px);transform:scale(calc(.96 + var(--glow-progress) * .07))}
+
+@media(max-width:800px){
+  .hero-sequence .cyber-atmosphere{inset:62px 0 0}
+  .hero-sequence .hero h1{letter-spacing:-.01em}
+  .hero-sequence .hero h1 span{width:auto;text-shadow:0 2px 0 #68736a,2px 2px 0 #3d4840,4px 5px 0 #202722}
+  .hero-sequence .hero h1 span:first-child{text-shadow:0 2px 0 #b52c22,2px 2px 0 #762019,4px 5px 0 #30110e}
+}
