@@ -30,7 +30,7 @@ The CV is read on desktop and mobile, often quickly by recruiters or technical r
 
 - Spanish is the primary language.
 - The opening interaction must react to vertical pointer/scroll movement and progressively reveal a masked portrait over an unmasked portrait.
-- The portrait assets will be supplied later. The implementation must expose clear replacement paths and must not fabricate Alexander's likeness.
+- The portrait interaction uses a supplied 47-frame PNG sequence showing Alexander progressively placing the mask.
 - GitHub is `github.com/VillaAlexTor`.
 - LinkedIn URL remains undecided and must not be invented.
 
@@ -47,7 +47,8 @@ The CV is read on desktop and mobile, often quickly by recruiters or technical r
 - Practical OSINT, traffic analysis, digital forensics, DFIR, APK static analysis, and active bug bounty experience.
 - Cóndor Framework: Python OSINT CLI pipeline, React dashboard, Node.js reporting, CVSS 3.1 engine, and PDF export with Puppeteer.
 - NUGEO auditing work with HMAC chaining and Ed25519 checkpoints.
-- No portrait files, testimonials, certifications, employment dates, or verified LinkedIn URL supplied yet.
+- A 47-frame portrait sequence is available under `public/portraits/1.png` through `public/portraits/47.png`.
+- No testimonials, certifications, employment dates, or verified LinkedIn URL supplied yet.
 
 ## Product Principles
 

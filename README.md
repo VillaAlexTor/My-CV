@@ -9,14 +9,11 @@ npm install
 npm run dev
 ```
 
-## Agregar los retratos
+## Secuencia del retrato
 
-Guarda dos PNG con el mismo tamaño y encuadre en `public/portraits/`:
+La animación usa los 47 fotogramas numerados de `public/portraits/1.png` a `public/portraits/47.png`. El desplazamiento de la página y el movimiento vertical del puntero dentro del hero controlan el fotograma visible.
 
-- `villa-sin-mascara.png`
-- `villa-con-mascara.png`
-
-La transición se activará automáticamente. Hasta entonces, la interfaz muestra un avatar pixelado que deja claro que las imágenes están pendientes.
+Los fotogramas cercanos se precargan con prioridad y el resto se carga gradualmente para mantener fluida la primera visita.
 
 ## Datos pendientes
 
