@@ -128,8 +128,6 @@ function CinematicPortrait({ heroRef }: { heroRef: RefObject<HTMLElement | null>
       const range = (start: number, end: number) => Math.min(1, Math.max(0, (progress - start) / (end - start)))
       root.setProperty('--scroll-progress', String(progress))
       root.setProperty('--glow-progress', String(range(.06, .3)))
-      root.setProperty('--particle-progress', String(range(.16, .5)))
-      root.setProperty('--network-progress', String(range(.32, .68)))
     }
 
     const requestUpdate = () => {
@@ -188,13 +186,9 @@ export default function App() {
           <div className="signal-line" aria-hidden="true"><i /></div>
           <div className="cyber-atmosphere" aria-hidden="true">
             <div className="cyber-glow" />
-            <div className="cyber-particles">{Array.from({ length: 18 }, (_, index) => <i key={index} />)}</div>
-            <svg className="cyber-network" viewBox="0 0 800 900" preserveAspectRatio="none">
-              <g><path d="M0 706 L126 610 L218 690 L292 564 L398 622 L486 514 L578 642 L676 548 L800 624 M0 330 L138 392 L224 286 L338 354 L438 246 L566 318 L660 228 L800 292 M0 148 L112 214 L214 126 M586 112 L682 54 L800 176 M648 420 L744 368 L800 438"/><circle cx="0" cy="706" r="5"/><circle cx="126" cy="610" r="4"/><circle cx="218" cy="690" r="5"/><circle cx="292" cy="564" r="3"/><circle cx="398" cy="622" r="5"/><circle cx="486" cy="514" r="3"/><circle cx="578" cy="642" r="4"/><circle cx="676" cy="548" r="5"/><circle cx="800" cy="624" r="4"/><circle cx="0" cy="330" r="4"/><circle cx="138" cy="392" r="5"/><circle cx="224" cy="286" r="3"/><circle cx="338" cy="354" r="4"/><circle cx="438" cy="246" r="5"/><circle cx="566" cy="318" r="3"/><circle cx="660" cy="228" r="4"/><circle cx="800" cy="292" r="5"/></g>
-            </svg>
           </div>
           <div className="hero-copy">
-            <h1><span>ALEXANDER</span><span>VILLARROEL</span></h1>
+            <h1><span>ALEXANDER</span><br/>VILLARROEL</h1>
             <p className="hero-role">Seguridad de la información <b>×</b> Ingeniería backend</p>
             <p className="hero-summary">Investigo amenazas, construyo herramientas y convierto señales dispersas en decisiones técnicas defendibles.</p>
             <div className="hero-meta"><span><MapPin size={15}/> La Paz, Bolivia</span><span><Crosshair size={15}/> OSINT · DFIR · AppSec</span></div>
